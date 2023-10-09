@@ -27,7 +27,7 @@ const app = {
     {
       name: "Chìm Sâu",
       singers: "RPT MCK (feat. Trung Trần)",
-      image: './image/song1.jpg',
+      image: './image/song1.png',
       path: './assets/music/song1.mp3',
     },
     {
