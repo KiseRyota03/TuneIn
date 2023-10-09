@@ -12,4 +12,4 @@ Tune In is a music player connect to your favourite songs.
 - Bootstrap
 
 # Website
-Live at https://kiseryota03.github.io/tunein/
+Live at https://kiseryota03.github.io/TuneIn/
