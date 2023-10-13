@@ -15,6 +15,8 @@ const nextBtn = $(".btn-next");
 const prevBtn = $(".btn-prev");
 const radBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
+const volumeBtn = $(".btn-volume");
+
 
 
 const app = {
@@ -22,6 +24,8 @@ const app = {
   isPlaying: false, // mặc định không chạy bài hát
   isRandom: false, // shuffle
   isRepeat: false, // repeat
+  playedIndexes: [], // mảng bài hát
+  isMuted: false, // mute
   config: JSON.parse(localStorage.getItem(MUSIC_STORAGE_KEY)) || {},
   songs: [
     {
@@ -159,30 +163,40 @@ const app = {
   loadConfig: function () {
     app.isRandom = app.config.isRandom
     app.isRepeat = app.config.isRepeat
+    app.isMuted = app.config.isMuted
+    // this.currentIndex = this.config.currentIndex
   },
 
   randomSong: function () {
     let newIndex;
     do {
-      newIndex = Math.floor(Math.random() * app.currentIndex);
-    } while (newIndex === app.currentIndex);
-
+      newIndex = Math.floor(Math.random() * app.songs.length);
+    } while (app.currentIndex === newIndex || app.playedIndexes.includes(newIndex)); // đk kết thúc
+      
+    app.playedIndexes.push(newIndex) // thêm Index mới vào mảng
+    if (app.playedIndexes.length === app.songs.length) { // reset mảng
+      app.playedIndexes = []
+    }
     app.currentIndex = newIndex;
+    app.loadCurrentSong();
   },
 
   scrollToActiveSong: function () {
     setTimeout(() => {
       $(".song.active").scrollIntoView({
         behavior: "smooth",
-        block: "nearest",
+        block: "center",
       });
     }, 200);
   },
 
   loadCurrentSong: function () {
+    
     heading.textContent = app.currentSong.name;
     cdThumb.style.backgroundImage = `url('${app.currentSong.image}')`;
     audio.src = app.currentSong.path;
+    this.setConfig("currentIndex", this.currentIndex);
+    
   },
 
   handleEvents: function () {
@@ -206,6 +220,7 @@ const app = {
 
     // click play btn
     playBtn.onclick = function () {
+    console.log(audio.muted)
       if (playBtn.isPlaying) audio.pause();
       else audio.play();
 
@@ -228,7 +243,7 @@ const app = {
         }
       };
 
-      progress.onchange = function (e) {
+      progress.oninput = function (e) {
         const seekTime = progress.value/ 100 * audio.duration;
 
         audio.currentTime = seekTime;
@@ -243,6 +258,21 @@ const app = {
         audio.play();
         app.render();
         app.scrollToActiveSong();
+      };
+
+      volumeBtn.onclick = function() {
+        if(app.isMuted) {
+          audio.muted=true;
+        volumeBtn.classList.add("mute");
+
+        }
+
+        else {
+         audio.muted = false;
+        volumeBtn.classList.remove("mute");
+
+       }
+        app.isMuted = ! app.isMuted;
       };
 
       prevBtn.onclick = function () {
@@ -272,7 +302,7 @@ const app = {
 
       // Xử lý next song khi audio ended
 
-      audio.oneneded = function () {
+      audio.onended = function () {
         if (app.isRepeat) {
           app.loadCurrentSong();
           audio.play();
@@ -313,6 +343,7 @@ const app = {
       // hiển thị trạng thái ban đầu của 2 nút
       radBtn.classList.toggle('active', app.isRandom);
       repeatBtn.classList.toggle("active", app.isRepeat);
+
 
   },
 };
