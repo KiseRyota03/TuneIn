@@ -94,7 +94,15 @@
     justify-content: space-around;
     padding: 18px 0 4px;
   }
-  
+  .btn-volume i {
+    width: 20px;
+    height: 24px;
+  }
+
+  .btn-volume i:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
   .control .btn {
     color: #666;
     padding: 18px;
@@ -209,4 +217,20 @@
     color: #999;
     font-size: 16px;
   }
+
+  /* dark mode */
+  .darkmode {
+    background-color: #292929;
+  }
+
+  .darkmode .dashboard {
+    background-color: #292929;
+    color: white;
+  }
   
+  .darkmode header h2 {
+    color: white;
+  }
+  .darkmode .dashboard i {
+    color: white;
+  }

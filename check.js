@@ -19,6 +19,7 @@ const randomBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
 const playlist = $(".playlist");
 
+
 const app = {
   currentIndex: 0,
   isPlaying: false,

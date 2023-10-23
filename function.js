@@ -16,8 +16,29 @@ const prevBtn = $(".btn-prev");
 const radBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
 const volumeBtn = $(".btn-volume");
+const checkbox = $(".checkbox");
 
+if (localStorage.getItem('theme') == 'dark') {
+    setDarkMode();
 
+    if(checkbox.checked) {
+      localStorage.setItem('checkbox', true);
+    }
+}
+
+function setDarkMode() {
+  const isDark = player.classList.toggle('darkmode');
+  
+  if(isDark) {
+    setDarkMode.checked = true;
+    localStorage.setItem('theme', 'dark');
+    checkbox.setAttribute('checked', 'checked');
+  }
+  else {
+    setDarkMode.checked = true;
+    localStorage.removeItem('theme', 'dark');
+  }
+}
 
 const app = {
   currentIndex: 0,
@@ -112,6 +133,7 @@ const app = {
     localStorage.setItem(MUSIC_STORAGE_KEY, JSON.stringify(this.config));
   },
 
+  
   render: function () {
     const htmls = this.songs.map((song, index) => {
       return `
@@ -264,7 +286,6 @@ const app = {
         if(app.isMuted) {
           audio.muted=true;
         volumeBtn.classList.add("mute");
-
         }
 
         else {
@@ -347,5 +368,7 @@ const app = {
 
   },
 };
+
+
 
 app.start();
