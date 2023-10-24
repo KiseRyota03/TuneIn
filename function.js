@@ -16,33 +16,15 @@ const prevBtn = $(".btn-prev");
 const radBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
 const volumeBtn = $(".btn-volume");
-const checkbox = $(".checkbox");
+const checkbox = $("#checkbox");
 
-if (localStorage.getItem('theme') == 'dark') {
-    setDarkMode();
 
-    if(checkbox.checked) {
-      localStorage.setItem('checkbox', true);
-    }
-}
 
-function setDarkMode() {
-  const isDark = player.classList.toggle('darkmode');
-  
-  if(isDark) {
-    setDarkMode.checked = true;
-    localStorage.setItem('theme', 'dark');
-    checkbox.setAttribute('checked', 'checked');
-  }
-  else {
-    setDarkMode.checked = true;
-    localStorage.removeItem('theme', 'dark');
-  }
-}
 
 const app = {
   currentIndex: 0,
   isPlaying: false, // mặc định không chạy bài hát
+  isDark: false,
   isRandom: false, // shuffle
   isRepeat: false, // repeat
   playedIndexes: [], // mảng bài hát
@@ -186,6 +168,7 @@ const app = {
     app.isRandom = app.config.isRandom
     app.isRepeat = app.config.isRepeat
     app.isMuted = app.config.isMuted
+    app.isDark = app.config.isDark
     // this.currentIndex = this.config.currentIndex
   },
 
@@ -313,6 +296,14 @@ const app = {
         app.setConfig('isRandom', app.isRandom);
         radBtn.classList.toggle('active', app.isRandom);
       };
+
+      // Xử lý bật/ tắt dark mode
+      checkbox.onclick = function() {
+        console.log('1');
+        app.isDark = !app.isDark;
+        app.setConfig('isDark', app.isDark);
+        player.classList.toggle('darkmode', app.isDark);
+      }
 
       // Xử lý phát lại bài hát
       repeatBtn.onclick = function () {

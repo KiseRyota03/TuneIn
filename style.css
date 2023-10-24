@@ -2,6 +2,9 @@
     --primary-color: #ec1f55;
     --text-color: #333;
   }
+.darkmode {
+  --primary-color: #1ed760
+}
   
   * {
     padding: 0;
@@ -58,7 +61,7 @@
   }
   
   header h2 {
-    color: var(--text-color);
+    color: var(--primary-color);
     font-size: 22px;
     text-align: center;
 
@@ -71,6 +74,15 @@
     padding-left: 10px;
   }
   
+  .form-check {
+    margin-top: 8px;
+  }
+  .btn-volume {
+    margin-top: auto;
+  }
+  h4 {
+    margin-top: auto;
+  }
   /* CD */
   .cd {
     display: flex;
@@ -220,11 +232,11 @@
 
   /* dark mode */
   .darkmode {
-    background-color: #292929;
+    background-color: #222;
   }
 
   .darkmode .dashboard {
-    background-color: #292929;
+    background-color: #222;
     color: white;
   }
   
