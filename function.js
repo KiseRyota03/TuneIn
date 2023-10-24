@@ -299,7 +299,6 @@ const app = {
 
       // Xử lý bật/ tắt dark mode
       checkbox.onclick = function() {
-        console.log('1');
         app.isDark = !app.isDark;
         app.setConfig('isDark', app.isDark);
         player.classList.toggle('darkmode', app.isDark);
@@ -355,6 +354,7 @@ const app = {
       // hiển thị trạng thái ban đầu của 2 nút
       radBtn.classList.toggle('active', app.isRandom);
       repeatBtn.classList.toggle("active", app.isRepeat);
+
 
 
   },
