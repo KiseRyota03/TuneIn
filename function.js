@@ -17,7 +17,8 @@ const radBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
 const volumeBtn = $(".btn-volume");
 const checkbox = $("#checkbox");
-
+const searchBtn = $(".search-btn");
+const searchInput = $(".search-input");
 
 
 
@@ -138,6 +139,8 @@ const app = {
     playlist.innerHTML = htmls.join("");
   },
 
+  
+
   defineProperties: function () {
     Object.defineProperty(app, "currentSong", {
       get: function () {
@@ -194,6 +197,11 @@ const app = {
       });
     }, 200);
   },
+
+  searchProduct: function() {
+
+  },
+
 
   loadCurrentSong: function () {
     
@@ -254,6 +262,34 @@ const app = {
         audio.currentTime = seekTime;
       };
 
+      // search bài hát
+      searchBtn.onclick = function() {
+        let valueSearch = searchInput.value;
+        console.log(valueSearch);
+        let songSearch = app.songs.filter((song) => {
+          return song.name.toLowerCase().includes(valueSearch.toLowerCase());
+        });
+        const htmls = songSearch.map((song, index) => {
+          return `
+                <div class="song ${
+                  index === app.currentIndex ? "active" : ""
+                }" data-index= "${index}">
+                <div class="thumb" 
+                style="background-image: url('${song.image}')">
+                </div>
+                <div class="body">
+                  <h3 class="title">${song.name}</h3>
+                  <p class="author">${song.singers}</p>
+                </div>
+                <div class="option">
+                  <i class="fas fa-ellipsis-h"></i>
+                </div>
+              </div>
+                `;
+        });
+        playlist.innerHTML = htmls.join("");
+      },
+ 
       nextBtn.onclick = function () {
         if (app.isRandom) {
           app.randomSong();
